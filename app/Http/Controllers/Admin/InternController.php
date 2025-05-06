@@ -120,7 +120,7 @@ class InternController extends Controller
     public function assign()
     {
         try {
-            $tasks = Task::where('status', 'pending')->get();
+            $tasks = Task::whereIn('status', ['pending', 'in_progress'])->get();
             $interns = Intern::all();
             return view('admin.interns.assign', compact('tasks', 'interns'));
         } catch (Exception $e) {
