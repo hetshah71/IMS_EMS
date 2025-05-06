@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Task;
 use App\Models\Intern;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Exception;
@@ -64,7 +65,7 @@ class TaskController extends Controller
     public function show(Task $task)
     {
         try {
-            $task->load(['creator', 'interns']);
+            $task->load(['creator', 'interns', 'comments.user']);
             return view('admin.tasks.show', compact('task'));
         } catch (Exception $e) {
             return redirect()->back()->with('error', 'Error loading task: ' . $e->getMessage());
@@ -104,5 +105,24 @@ class TaskController extends Controller
     {
         $task->delete();
         return redirect()->route('tasks.index')->with('success', 'Task deleted successfully.');
+    }
+    
+    public function addComment(Request $request, Task $task)
+    {
+        try {
+            $validated = $request->validate([
+                'content' => 'required|string'
+            ]);
+            
+            Comment::create([
+                'task_id' => $task->id,
+                'user_id' => Auth::id(),
+                'content' => $validated['content']
+            ]);
+            
+            return redirect()->route('tasks.edit', $task)->with('success', 'Comment added successfully.');
+        } catch (Exception $e) {
+            return redirect()->route('tasks.edit', $task)->with('error', 'Error adding comment: ' . $e->getMessage())->withInput();
+        }
     }
 }

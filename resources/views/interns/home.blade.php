@@ -28,7 +28,30 @@
                     @else
                         <ul class="list-disc list-inside">
                             @foreach ($intern->tasks as $task)
-                                <li class="text-gray-600">{{ $task->title }}</li>
+                                <li class="text-gray-600 mb-4">
+                                    <div>
+                                        <strong>{{ $task->title }}</strong>
+                                        <p class="ml-5 text-sm">{{ $task->description }}</p>
+                                        
+                                        <!-- Display comments for this task -->
+                                        @if($task->comments->isNotEmpty())
+                                            <div class="ml-5 mt-2">
+                                                <h4 class="text-sm font-semibold text-gray-700">Comments:</h4>
+                                                <ul class="list-none ml-2 mt-1">
+                                                    @foreach($task->comments as $comment)
+                                                        <li class="text-sm text-gray-600 border-l-2 border-gray-300 pl-3 py-1">
+                                                            <span class="font-medium">{{ $comment->user->name }}:</span> 
+                                                            {{ $comment->content }}
+                                                            <span class="text-xs text-gray-500 ml-1">
+                                                                ({{ $comment->created_at->diffForHumans() }})
+                                                            </span>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </li>
                             @endforeach
                         </ul>
                     @endif
