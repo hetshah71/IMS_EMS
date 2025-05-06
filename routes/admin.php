@@ -20,7 +20,7 @@ Route::prefix('admin')->group(function () {
         Route::prefix('tasks')->group(function () {
             Route::get('/', [TaskController::class, 'index'])->name('tasks.index');
             Route::get('/create', [TaskController::class, 'create'])->name('tasks.create');
-            Route::post('/create', [TaskController::class, 'store'])->name('tasks.store');
+            Route::post('/create', [TaskController::class, 'store'])->name('tasks.store');  // Changed from Route::post('/', ...)
             Route::get('/{task}', [TaskController::class, 'show'])->name('tasks.show');
             Route::get('/{task}/edit', [TaskController::class, 'edit'])->name('tasks.edit');
             Route::patch('/{task}/update', [TaskController::class, 'update'])->name('tasks.update');
@@ -41,3 +41,5 @@ Route::prefix('admin')->group(function () {
 
     });
 });
+
+
