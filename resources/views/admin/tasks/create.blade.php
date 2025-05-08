@@ -1,47 +1,61 @@
 <x-dashboard-layout>
-    <div class="py-12">
+    <div class="py-8">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    <div class="mb-6">
-                        <h2 class="text-2xl font-semibold text-gray-800">Create New Task</h2>
-                    </div>
+            <!-- Header Section -->
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8">
+                <div>
+                    <h1 class="text-3xl font-bold text-white mb-1">Create New Task</h1>
+                    <p class="text-gray-400">Add a new task for your interns</p>
+                </div>
+                <div class="mt-4 md:mt-0">
+                    <a href="{{ route('tasks.index') }}"
+                        class="bg-gray-700 hover:bg-gray-600 text-white font-medium py-2.5 px-5 rounded-lg inline-flex items-center transition-all duration-200 shadow-lg">
+                        <svg class="h-5 w-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                        Back to Tasks
+                    </a>
+                </div>
+            </div>
+
+            <div class="bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg border border-gray-700">
+                <div class="p-6">
 
                     <form action="{{ route('tasks.store') }}" method="POST" class="space-y-6">
                         @csrf
 
                         <div>
-                            <label for="title" class="block text-sm font-medium text-gray-700">Title</label>
+                            <label for="title" class="block text-sm font-medium text-gray-300">Title</label>
                             <input type="text" name="title" id="title" value="{{ old('title') }}"
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                 required>
                             @error('title')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
 
                         <div>
-                            <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+                            <label for="description" class="block text-sm font-medium text-white">Description</label>
                             <textarea name="description" id="description" rows="4"
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-gray-300 focus:ring-indigo-500 sm:text-sm"
                                 required>{{ old('description') }}</textarea>
                             @error('description')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
 
                         <div>
-                            <label for="due_date" class="block text-sm font-medium text-gray-700">Due Date</label>
+                            <label for="due_date" class="block text-sm font-medium text-white">Due Date</label>
                             <input type="date" name="due_date" id="due_date" value="{{ old('due_date') }}"
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                 required>
                             @error('due_date')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
 
                         <div>
-                            <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
+                            <label for="status" class="block text-sm font-medium text-white">Status</label>
                             <select name="status" id="status"
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                 required>
@@ -50,23 +64,23 @@
                                 <option value="completed" {{ old('status') == 'completed' ? 'selected' : '' }}>Completed</option>
                             </select>
                             @error('status')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
 
                         <div>
-                            <label for="interns" class="block text-sm font-medium text-gray-700">Assign Interns</label>
+                            <label for="interns" class="block text-sm font-medium text-white">Assign Interns</label>
                             <select name="interns[]" id="interns" multiple
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                 required>
                                 @foreach($interns as $intern)
-                                    <option value="{{ $intern->id }}" {{ in_array($intern->id, old('interns', [])) ? 'selected' : '' }}>
-                                        {{ $intern->user->name }}
-                                    </option>
+                                <option value="{{ $intern->id }}" {{ in_array($intern->id, old('interns', [])) ? 'selected' : '' }}>
+                                    {{ $intern->user->name }}
+                                </option>
                                 @endforeach
                             </select>
                             @error('interns')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
 

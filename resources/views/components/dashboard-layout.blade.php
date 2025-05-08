@@ -31,6 +31,9 @@
                     Permissions
                 </a>
                 @endcan
+                <a href="{{ route('chat.index') }}" class="block px-6 py-3 hover:bg-gray-700 transition duration-150">
+                    CHAT
+                </a>
             </nav>
         </aside>
 
