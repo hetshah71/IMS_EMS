@@ -115,9 +115,9 @@ class Authenticate implements AuthenticatesRequests
     protected function redirectTo(Request $request, $guards)
     {
         if(in_array("intern", $guards)) {
-            return route("intern.login");
+            return route("intern.login.form");
         } else if(in_array("admin", $guards)) {
-            return route("admin.login");
+            return route("admin.login.form");
         }
         // if (static::$redirectToCallback) {
         //     return call_user_func(static::$redirectToCallback, $request);

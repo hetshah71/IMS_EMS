@@ -25,6 +25,6 @@ class Admin extends Model
     // Check if this admin is a super admin
     public function isSuperAdmin()
     {
-        return $this->is_super_admin === true;
+        return $this->is_super_admin === 1;
     }
 }

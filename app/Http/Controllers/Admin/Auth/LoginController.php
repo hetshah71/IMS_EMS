@@ -46,7 +46,7 @@ class LoginController extends Controller
             if (Auth::guard('admin')->check()) {
                 Auth::guard('admin')->logout();
             }
-            return redirect()->route('admin.login')->with('status', 'Logged out successfully.');
+            return redirect()->route('admin.login.form')->with('status', 'Logged out successfully.');
         } catch (Exception $e) {
             return redirect()->back()->with('error', 'Error during logout: ' . $e->getMessage());
         }
