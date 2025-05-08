@@ -7,14 +7,14 @@
                         <h2 class="text-2xl font-semibold text-gray-800">Create New Permission</h2>
                     </div>
 
-                    <form action="{{ route('permissions.store') }}" method="POST" class="space-y-6">
+                    <form  id="create-permission-form" action="{{ route('permissions.store') }}" method="POST" class="space-y-6">
                         @csrf
 
                         <div>
                             <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
                             <input type="text" name="name" id="name" value="{{ old('name') }}"
                                 class="permission-name mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                required>
+                                >
                             @error('name')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
@@ -24,7 +24,7 @@
                             <label for="slug" class="block text-sm font-medium text-gray-700">Slug</label>
                             <input type="text" name="slug" id="slug" value="{{ old('slug') }}"
                                 class="permission-slug mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                required>
+                                >
                             @error('slug')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror

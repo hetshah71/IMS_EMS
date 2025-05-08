@@ -7,7 +7,7 @@
                         <h2 class="text-2xl font-semibold text-gray-800">Edit Role</h2>
                     </div>
 
-                    <form action="{{ route('roles.update', $role) }}" method="POST" class="space-y-6">
+                    <form id="editRoleForm" action="{{ route('roles.update', $role) }}" method="POST" class="space-y-6">
                         @csrf
                         @method('PATCH')
 

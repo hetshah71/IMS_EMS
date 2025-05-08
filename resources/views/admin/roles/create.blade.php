@@ -7,7 +7,7 @@
                         <h2 class="text-2xl font-semibold text-gray-800">Create New Role</h2>
                     </div>
 
-                    <form action="{{ route('roles.store') }}" method="POST" class="space-y-6">
+                    <form id="createRoleForm" action="{{ route('roles.store') }}" method="POST" class="space-y-6">
                         @csrf
 
                         <div>
@@ -20,7 +20,7 @@
                             @enderror
                         </div>
 
-                        
+
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-2">Permissions</label>
                             <div class="space-y-2 max-h-60 overflow-y-auto p-4 border rounded-md">

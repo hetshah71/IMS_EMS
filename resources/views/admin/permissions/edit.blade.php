@@ -7,7 +7,7 @@
                         <h2 class="text-2xl font-semibold text-gray-800">Edit Permission</h2>
                     </div>
 
-                    <form action="{{ route('permissions.update', $permission) }}" method="POST" class="space-y-6">
+                    <form id="edit-permission-form" action=" {{ route('permissions.update', $permission) }}" method="POST" class="space-y-6">
                         @csrf
                         @method('PATCH')
 

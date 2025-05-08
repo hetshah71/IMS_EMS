@@ -5,7 +5,7 @@
                 <div class="p-6 bg-gray-800 border-b border-gray-700">
                     <h2 class="text-2xl font-semibold text-gray-200 mb-6">Edit Intern</h2>
 
-                    <form action="{{ route('interns.update', $intern->id) }}" method="POST" class="space-y-6">
+                    <form id="editInternForm" action="{{ route('interns.update', $intern->id) }}" method="POST" class="space-y-6">
                         @csrf
                         @method('PATCH')
 
@@ -15,7 +15,7 @@
                                 class="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-gray-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                 required>
                             @error('name')
-                                <p class="mt-1 text-sm text-red-400">{{ $message }}</p>
+                            <p class="mt-1 text-sm text-red-400">{{ $message }}</p>
                             @enderror
                         </div>
 
@@ -25,7 +25,7 @@
                                 class="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-gray-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                 required>
                             @error('email')
-                                <p class="mt-1 text-sm text-red-400">{{ $message }}</p>
+                            <p class="mt-1 text-sm text-red-400">{{ $message }}</p>
                             @enderror
                         </div>
 
@@ -35,7 +35,7 @@
                                 class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                                 required>
                             @error('department')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
 
@@ -46,7 +46,7 @@
                             <input type="password" name="password" id="password"
                                 class="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-gray-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                             @error('password')
-                                <p class="mt-1 text-sm text-red-400">{{ $message }}</p>
+                            <p class="mt-1 text-sm text-red-400">{{ $message }}</p>
                             @enderror
                         </div>
 

@@ -11,7 +11,7 @@
                         </div>
                     @endif
 
-                    <form action="{{ route('interns.assign.store') }}" method="POST" class="space-y-6">
+                    <form id="assignTaskForm"  action="{{ route('interns.assign.store') }}" method="POST" class="space-y-6">
                         @csrf
 
                         <!-- Intern Selection -->

@@ -6,66 +6,92 @@ use App\Http\Controllers\Controller;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use App\Models\Permission;
+use Exception;
 
 class RoleController extends Controller
 {
-    public function index(): View
+    public function index(): View|RedirectResponse
     {
-        $roles = Role::all();
-        return view('admin.roles.index', compact('roles'));
+        try {
+            $roles = Role::all();
+            return view('admin.roles.index', compact('roles'));
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Error loading roles: ' . $e->getMessage());
+        }
     }
 
-    public function create(): View
+    public function create(): View|RedirectResponse
     {
-        $permissions = Permission::all();
-        return view('admin.roles.create', compact('permissions'));
+        try {
+            $permissions = Permission::all();
+            return view('admin.roles.create', compact('permissions'));
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Error loading create form: ' . $e->getMessage());
+        }
     }
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255|unique:roles',
-            'permissions' => 'array',
-            'permissions.*' => 'exists:permissions,id'
-        ]);
+        try {
+            $validated = $request->validate([
+                'name' => 'required|string|max:255|unique:roles',
+                'permissions' => 'array',
+                'permissions.*' => 'exists:permissions,id'
+            ]);
 
-        $role = Role::create([
-            'name' => $validated['name'],
-        ]);
+            $role = Role::create([
+                'name' => $validated['name'],
+            ]);
 
-        if ($request->has('permissions')) {
-            $role->permissions()->sync($request->permissions);
+            if ($request->has('permissions')) {
+                $role->permissions()->sync($request->permissions);
+            }
+
+            return redirect()->route('roles.index')
+                ->with('success', 'Role created successfully.');
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Error creating role: ' . $e->getMessage())->withInput();
         }
-
-        return redirect()->route('roles.index')
-            ->with('success', 'Role created successfully.');
     }
 
-    public function edit(Role $role): View
+    public function edit(Role $role): View|RedirectResponse
     {
-        $permissions = Permission::all();
-        return view('admin.roles.edit', compact('role', 'permissions'));
+        try {
+            $permissions = Permission::all();
+            return view('admin.roles.edit', compact('role', 'permissions'));
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Error loading edit form: ' . $e->getMessage());
+        }
     }
 
     public function update(Request $request, Role $role)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255|unique:roles,name,' . $role->id,
-        ]);
+        try {
+            $validated = $request->validate([
+                'name' => 'required|string|max:255|unique:roles,name,' . $role->id,
+            ]);
 
-        $role->update($validated);
+            $role->update($validated);
 
-        $role->permissions()->sync($request->permissions);
-        return redirect()->route('roles.index')
-            ->with('success', 'Role updated successfully.');
+            $role->permissions()->sync($request->permissions);
+            return redirect()->route('roles.index')
+                ->with('success', 'Role updated successfully.');
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Error updating role: ' . $e->getMessage())->withInput();
+        }
     }
 
     public function destroy(Role $role)
     {
-        $role->delete();
-        $role->permissions()->detach();
-        return redirect()->route('roles.index')
-            ->with('success', 'Role deleted successfully.');
+        try {
+            $role->delete();
+            $role->permissions()->detach();
+            return redirect()->route('roles.index')
+                ->with('success', 'Role deleted successfully.');
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Error deleting role: ' . $e->getMessage());
+        }
     }
 }

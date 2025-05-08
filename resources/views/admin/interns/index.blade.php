@@ -6,9 +6,7 @@
                     <div class="flex justify-between items-center mb-6">
                         <h2 class="text-2xl font-semibold text-gray-800">Intern Management</h2>
                         <div class="space-x-2">
-                            <a href="{{ route('interns.index') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                Create New Intern
-                            </a>
+                            
                             <a href="{{ route('interns.assign') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
                                 Assign Task
                             </a>

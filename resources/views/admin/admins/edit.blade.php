@@ -7,7 +7,7 @@
                         <h2 class="text-3xl font-bold text-gray-900">Edit Admin</h2>
                     </div>
 
-                    <form action="{{ route('admins.update', $admin) }}" method="POST" class="space-y-6">
+                    <form id="editAdminForm" action="{{ route('admins.update', $admin) }}" method="POST" class="space-y-6">
                         @csrf
                         @method('PATCH')
 

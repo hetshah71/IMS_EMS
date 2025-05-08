@@ -8,22 +8,32 @@ use App\Models\Admin;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Exception;
 
 class AdminController extends Controller
 {
     public function index()
     {
-        $admins = Admin::paginate(5);
-        return view('admin.admins.index', compact('admins'));
+        try {
+            $admins = Admin::paginate(5);
+            return view('admin.admins.index', compact('admins'));
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Error loading admins: ' . $e->getMessage());
+        }
     }
     public function create()
     {
-        $roles = Role::all();
-        return view('admin.admins.create', compact('roles'));
+        try {
+            $roles = Role::all();
+            return view('admin.admins.create', compact('roles'));
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Error loading create form: ' . $e->getMessage());
+        }
     }
     public function store(Request $request)
     {
-        $request->validate([
+        try {
+            $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8',
@@ -49,7 +59,10 @@ class AdminController extends Controller
         if ($request->has('roles')) {
             $user->roles()->sync($request->input('roles'));
         }
-        return redirect()->route('admins.index')->with('success', 'Admin created successfully');
+            return redirect()->route('admins.index')->with('success', 'Admin created successfully');
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Error creating admin: ' . $e->getMessage())->withInput();
+        }
     }
     // public function show(Admin $admin)
     // {
@@ -57,12 +70,17 @@ class AdminController extends Controller
     // }
     public function edit(Admin $admin)
     {
-        $roles = Role::all();
-        return view('admin.admins.edit', compact('admin', 'roles'));
+        try {
+            $roles = Role::all();
+            return view('admin.admins.edit', compact('admin', 'roles'));
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Error loading edit form: ' . $e->getMessage());
+        }
     }
     public function update(Request $request, Admin $admin)
     {
-        $user = User::findOrFail($admin->user_id);
+        try {
+            $user = User::findOrFail($admin->user_id);
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id, // Exclude current user's email
@@ -85,16 +103,23 @@ class AdminController extends Controller
         ]);
         // Sync roles to the user
         $user->roles()->sync($request->input('roles'));
-        return redirect()->route('admins.index')->with('success', 'Admin updated successfully');
+            return redirect()->route('admins.index')->with('success', 'Admin updated successfully');
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Error updating admin: ' . $e->getMessage())->withInput();
+        }
     }
     public function destroy(Admin $admin)
     {
-        $user = User::findOrFail($admin->user_id);
+        try {
+            $user = User::findOrFail($admin->user_id);
         // Detach roles from the user
         $user->roles()->detach();
         // Delete the admin and user records
         $admin->delete();
         $user->delete();
-        return redirect()->route('admins.index')->with('success', 'Admin deleted successfully');
+            return redirect()->route('admins.index')->with('success', 'Admin deleted successfully');
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', 'Error deleting admin: ' . $e->getMessage());
+        }
     }
 }

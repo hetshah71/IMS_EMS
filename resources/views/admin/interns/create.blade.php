@@ -5,53 +5,48 @@
                 <div class="p-6 bg-gray-800 border-b border-gray-700">
                     <h2 class="text-2xl font-semibold text-gray-200 mb-6">Create New Intern</h2>
 
-                    <form action="{{ route('interns.store') }}" method="POST" class="space-y-6">
+                    <form id="createInternForm" action="{{ route('interns.store') }}" method="POST" class="space-y-6">
                         @csrf
 
                         <div>
                             <label for="name" class="block text-sm font-medium text-gray-300">Name</label>
                             <input type="text" name="name" id="name" value="{{ old('name') }}"
-                                class="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-gray-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                required>
+                                class="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-gray-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                             @error('name')
-                                <p class="mt-1 text-sm text-red-400">{{ $message }}</p>
+                            <p class="mt-1 text-sm text-red-400">{{ $message }}</p>
                             @enderror
                         </div>
 
                         <div>
                             <label for="email" class="block text-sm font-medium text-gray-300">Email</label>
                             <input type="email" name="email" id="email" value="{{ old('email') }}"
-                                class="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-gray-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                required>
+                                class="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-gray-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                             @error('email')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
                         <div>
                             <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
                             <input type="password" name="password" id="password"
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                required>
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                             @error('password')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
 
                         <div>
                             <label for="password_confirmation" class="block text-sm font-medium text-gray-700">Confirm Password</label>
                             <input type="password" name="password_confirmation" id="password_confirmation"
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                required>
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                         </div>
 
-                        
+
                         <div>
                             <label for="department" class="block text-sm font-medium text-gray-700">Department</label>
                             <input type="text" name="department" id="department" value="{{ old('department') }}"
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                required>
+                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                             @error('department')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                            <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
                         <div class="flex items-center justify-end space-x-3">
