@@ -1,13 +1,13 @@
 <x-dashboard-layout>
     <div class="py-12">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
-                    <h2 class="text-2xl font-semibold text-gray-800 mb-6">Assign Task to Intern</h2>
+            <div class="bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 bg-gray-800 border-b border-gray-700">
+                    <h2 class="text-2xl font-semibold text-gray-200 mb-6">Assign Task to Intern</h2>
 
                     @if (session('success'))
-                        <div class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
-                            {{ session('success') }}
+                        <div class="mb-4 bg-green-900/30 border border-green-800 px-4 py-3 rounded">
+                            <p class="text-sm text-green-300">{{ session('success') }}</p>
                         </div>
                     @endif
 
@@ -16,9 +16,9 @@
 
                         <!-- Intern Selection -->
                         <div>
-                            <label for="intern_id" class="block text-sm font-medium text-gray-700">Select Intern</label>
+                            <label for="intern_id" class="block text-sm font-medium text-gray-300">Select Intern</label>
                             <select name="intern_id" id="intern_id" required
-                                class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-600 bg-gray-700 text-gray-200 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                                 <option value="">Select an intern</option>
                                 @foreach($interns as $intern)
                                     <option value="{{ $intern->id }}">{{ $intern->user->name }} - {{ $intern->department }}
@@ -26,15 +26,15 @@
                                 @endforeach
                             </select>
                             @error('intern_id')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                <p class="mt-1 text-sm text-red-400">{{ $message }}</p>
                             @enderror
                         </div>
 
                         <!-- Task Selection -->
                         <div>
-                            <label for="task_id" class="block text-sm font-medium text-gray-700">Select Task</label>
+                            <label for="task_id" class="block text-sm font-medium text-gray-300">Select Task</label>
                             <select name="task_id" id="task_id" required
-                                class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                                class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-600 bg-gray-700 text-gray-200 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                                 <option value="">Select a task</option>
                                 @foreach($tasks as $task)
                                     <option value="{{ $task->id }}">{{ $task->title }} (Due:
@@ -42,7 +42,7 @@
                                 @endforeach
                             </select>
                             @error('task_id')
-                                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                                <p class="mt-1 text-sm text-red-400">{{ $message }}</p>
                             @enderror
                         </div>
 

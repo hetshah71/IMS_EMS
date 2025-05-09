@@ -1,48 +1,48 @@
 <x-guest-layout>
     <div class="mb-4 text-center">
         <h1 class="text-2xl font-bold text-gray-200">Admin Login</h1>
+        <p class="mt-1 text-sm text-gray-400">Access your admin dashboard</p>
     </div>
 
     @if (session('error'))
-        <div class="mb-4 text-sm text-red-400">
-            {{ session('error') }}
-        </div>
+    <div class="mb-4 p-3 bg-red-900/30 border border-red-800 rounded-lg">
+        <p class="text-sm text-red-300 text-center">{{ session('error') }}</p>
+    </div>
     @endif
 
-    <form method="POST" action="{{ route('admin.login') }}" class="space-y-6">
+    <form method="POST" action="{{ route('admin.login') }}" class="space-y-4">
         @csrf
 
         <div>
-            <label for="email" class="block text-sm font-medium text-gray-300">Email</label>
-            <div class="mt-1">
-                <input id="email" type="email" name="email" value="{{ old('email') }}" required
-                    class="block w-full rounded-md border-gray-600 bg-gray-700 text-gray-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                    autocomplete="email">
-            </div>
+            <label for="email" class="block text-sm font-medium text-gray-300 mb-1">Email</label>
+            <input id="email" type="email" name="email" value="{{ old('email') }}" required
+                class="w-full px-3 py-2 rounded-md border border-gray-700 bg-gray-700 text-gray-200 placeholder-gray-500
+                       focus:border-indigo-500 focus:ring-indigo-500 focus:ring-1"
+                placeholder="admin@example.com"
+                autocomplete="email">
             @error('email')
-                <p class="mt-1 text-sm text-red-400">{{ $message }}</p>
+            <p class="mt-1 text-sm text-red-400">{{ $message }}</p>
             @enderror
         </div>
 
         <div>
-            <label for="password" class="block text-sm font-medium text-gray-300">Password</label>
-            <div class="mt-1">
-                <input id="password" type="password" name="password" required
-                    class="block w-full rounded-md border-gray-600 bg-gray-700 text-gray-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                    autocomplete="current-password">
-            </div>
+            <label for="password" class="block text-sm font-medium text-gray-300 mb-1">Password</label>
+            <input id="password" type="password" name="password" required
+                class="w-full px-3 py-2 rounded-md border border-gray-700 bg-gray-700 text-gray-200 placeholder-gray-500
+                       focus:border-indigo-500 focus:ring-indigo-500 focus:ring-1"
+                placeholder="••••••••"
+                autocomplete="current-password">
         </div>
 
-        <div>
-            <button type="submit"
-                class="flex w-full justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-800">
-                Login
-            </button>
-        </div>
+        <button type="submit"
+            class="w-full px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md 
+                   transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            Sign In
+        </button>
 
-        <div class="text-sm text-center text-gray-400">
+        <div class="text-sm text-center text-gray-400 pt-3">
             Not registered?
-            <a href="{{ route('admin.register.form') }}" class="font-medium text-indigo-400 hover:text-indigo-300">
+            <a href="{{ route('admin.register.form') }}" class="text-indigo-400 hover:text-indigo-300 hover:underline">
                 Register as Admin
             </a>
         </div>

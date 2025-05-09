@@ -35,7 +35,7 @@
                                     class="inline">
                                     @csrf
                                     <button type="submit"
-                                        class="ml-4 text-sm text-red-400 hover:text-red-300">Logout</button>
+                                        class="ml-4 text-sm text-gray-300 hover:text-gray-100 bg-gray-700 px-3 py-1 rounded-md transition-colors">Logout</button>
                                 </form>
                             </div>
                         </div>

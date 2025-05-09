@@ -8,6 +8,7 @@ use App\Models\Message;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Exception;
+use App\Events\MessageSent;
 
 class ChatController extends Controller
 {
@@ -57,15 +58,18 @@ class ChatController extends Controller
             ]);
 
             // Create a new message
-            Message::create([
+           $message = Message::create([
                 'sender_id' => Auth::user()->id,
                 'recipient_id' => $userId,
                 'content' => $request->input('content'),
                 'read' => false,
             ]);
-
-            return redirect()->route('chat.show', ['user' => $userId]);
-        } catch (Exception $e) {
+            broadcast(new MessageSent($message));
+            return response()->json([
+                'success' => true, 
+                'message' => $message]);
+        } 
+        catch (Exception $e) {
             return redirect()->back()->with('error', 'Error sending message: ' . $e->getMessage());
         }
     }
