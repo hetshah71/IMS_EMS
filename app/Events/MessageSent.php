@@ -31,7 +31,7 @@ class MessageSent
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('channel-name'),
+            new Channel('chat.' . $this->message['sender_id'] . '.' . $this->message['recipient_id'])
         ];
     }
     public function broadcastWith()
