@@ -79,6 +79,7 @@
                                         <span class="text-gray-500 italic">No roles assigned</span>
                                         @endforelse
                                     </td>
+                                    @if(!$admin->user->isSuperAdmin())
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                         <div class="flex space-x-3">
                                             <a href="{{ route('admins.edit', $admin) }}" class="text-indigo-400 hover:text-indigo-300 transition-colors duration-150">
@@ -99,6 +100,9 @@
                                             </form>
                                         </div>
                                     </td>
+                                    @else
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">This is SuperAdmin</td>
+                                    @endif
                                 </tr>
                                 @empty
                                 <tr>

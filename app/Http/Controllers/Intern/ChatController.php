@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Message;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Auth as FacadesAuth;
 use App\Events\MessageSent;
+use Illuminate\Support\Facades\Log;
 
 class ChatController extends Controller
 {
@@ -23,7 +23,7 @@ class ChatController extends Controller
     public function show($userId)
     {
         // Fetch messages between the authenticated user and the specified user
-        $authId = FacadesAuth::user()->id;
+        $authId = Auth::user()->id;
 
         $messages = Message::where(function ($query) use ($authId, $userId) {
             $query->where(function ($q) use ($authId, $userId) {
@@ -61,7 +61,7 @@ class ChatController extends Controller
             'message' => $message
         ]);
     }
-    
+
 
     public function markAsRead($messageId)
     {

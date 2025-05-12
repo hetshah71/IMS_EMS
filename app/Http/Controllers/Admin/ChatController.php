@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Exception;
 use App\Events\MessageSent;
+use Illuminate\Support\Facades\Log;
 
 class ChatController extends Controller
 {
@@ -64,6 +65,7 @@ class ChatController extends Controller
                 'content' => $request->input('content'),
                 'read' => false,
             ]);
+            Log::info('Message sent: ' . $message);
             broadcast(new MessageSent($message));
             return response()->json([
                 'success' => true, 

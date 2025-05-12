@@ -71,6 +71,9 @@ class AdminController extends Controller
     public function edit(Admin $admin)
     {
         try {
+            if($admin->user->isSuperAdmin()) {
+                return redirect()->back()->with('error', 'Cannot edit super admin');
+            }
             $roles = Role::all();
             return view('admin.admins.edit', compact('admin', 'roles'));
         } catch (Exception $e) {
@@ -111,6 +114,9 @@ class AdminController extends Controller
     public function destroy(Admin $admin)
     {
         try {
+            if($admin->user->isSuperAdmin()) {
+                return redirect()->back()->with('error', 'Cannot delete super admin');
+            }
             $user = User::findOrFail($admin->user_id);
         // Detach roles from the user
         $user->roles()->detach();

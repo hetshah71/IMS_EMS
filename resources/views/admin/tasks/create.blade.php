@@ -27,38 +27,34 @@
                         <div>
                             <label for="title" class="block text-sm font-medium text-gray-300">Title</label>
                             <input type="text" name="title" id="title" value="{{ old('title') }}"
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                >
+                                class="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-gray-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                             @error('title')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
 
                         <div>
-                            <label for="description" class="block text-sm font-medium text-white">Description</label>
+                            <label for="description" class="block text-sm font-medium text-gray-300">Description</label>
                             <textarea name="description" id="description" rows="4"
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-gray-300 focus:ring-indigo-500 sm:text-sm"
-                                >{{ old('description') }}</textarea>
+                                class="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-gray-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">{{ old('description') }}</textarea>
                             @error('description')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
 
                         <div>
-                            <label for="due_date" class="block text-sm font-medium text-white">Due Date</label>
+                            <label for="due_date" class="block text-sm font-medium text-gray-300">Due Date</label>
                             <input type="date" name="due_date" id="due_date" value="{{ old('due_date') }}"
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                >
+                                class="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-gray-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                             @error('due_date')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
 
                         <div>
-                            <label for="status" class="block text-sm font-medium text-white">Status</label>
+                            <label for="status" class="block text-sm font-medium text-gray-300">Status</label>
                             <select name="status" id="status"
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                                >
+                                class="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-gray-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                                 <option value="pending" {{ old('status') == 'pending' ? 'selected' : '' }}>Pending</option>
                                 <option value="in_progress" {{ old('status') == 'in_progress' ? 'selected' : '' }}>In Progress</option>
                                 <option value="completed" {{ old('status') == 'completed' ? 'selected' : '' }}>Completed</option>
@@ -69,10 +65,9 @@
                         </div>
 
                         <div>
-                            <label for="interns" class="block text-sm font-medium text-white">Assign Interns</label>
+                            <label for="interns" class="block text-sm font-medium text-gray-300">Assign Interns</label>
                             <select name="interns[]" id="interns" multiple
-                                class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                            >
+                                class="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-gray-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                                 @foreach($interns as $intern)
                                 <option value="{{ $intern->id }}" {{ in_array($intern->id, old('interns', [])) ? 'selected' : '' }}>
                                     {{ $intern->user->name }}
