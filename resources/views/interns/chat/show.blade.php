@@ -61,7 +61,14 @@
                     success: function(response) {
                         if (response.success) {
                             const msg = response.message;
-                            messagesDiv.append(`<div class="flex justify-end"><div class="bg-blue-600 text-white rounded-lg px-4 py-2 max-w-sm"><p class="text-sm">${msg.content}</p><span class="text-xs block mt-1 text-blue-200">Just now</span></div></div>`);
+                            const messageHtml = `
+                                <div class="flex justify-end">
+                                    <div class="bg-blue-600 text-white rounded-lg px-4 py-2 max-w-sm">
+                                        <p class="text-sm">${msg.content}</p>
+                                        <span class="text-xs block mt-1 text-blue-200">Just now</span>
+                                    </div>
+                                </div>`;
+                            $(messagesDiv).append(messageHtml);
                             input.val('');
                             messagesDiv.scrollTop = messagesDiv.scrollHeight;
                         } else {
@@ -79,20 +86,18 @@
             const channelName = `chat.${otherUserId}.${currentUserId}`;
 
             console.log('Channel name:', channelName);
-
-
             window.Echo.channel(channelName)
                 .listen('.MessageSent', function(e) { // Listen for messages sent to this channel
-                    console.log('intern Message received:', e);
-
-                    const messageHtml = `<div class=\"flex justify-start\">\n
-                        <div class=\"bg-gray-700 text-gray-200 rounded-lg px-4 py-2 max-w-sm\">\n
-                        <p class=\"text-sm\">${e.message.content}</p>\n
-                        <span class=\"text-xs block mt-1 text-gray-400\">Just now</span>\n
-                        </div>\n
-                        </div>\n`;
-                    messagesDiv.append(messageHtml);
-                    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+                    console.log('Message received:', e);
+                    const messageHtml = `
+                        <div class="flex justify-start">
+                            <div class="bg-gray-700 text-gray-200 rounded-lg px-4 py-2 max-w-sm">
+                                <p class="text-sm">${e.message.content}</p>
+                                <span class="text-xs block mt-1 text-gray-400">Just now</span>
+                            </div>
+                        </div>`;
+                    $('#messages').append(messageHtml);
+                    $('#messages')[0].scrollTop = $('#messages')[0].scrollHeight;
                 });
         });
     </script>
