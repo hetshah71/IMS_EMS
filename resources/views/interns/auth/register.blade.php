@@ -3,12 +3,6 @@
         <h1 class="text-2xl font-bold text-gray-900">Intern Registration</h1>
     </div>
 
-    @if (session('success'))
-        <div class="mb-4 text-sm text-green-600">
-            {{ session('success') }}
-        </div>
-    @endif
-
     <form method="POST" action="{{ route('intern.register') }}" class="space-y-6">
         @csrf
 

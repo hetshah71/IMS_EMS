@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\Auth\LoginRequest;
 use Exception;
 
 class LoginController extends Controller
@@ -18,13 +19,10 @@ class LoginController extends Controller
         }
     }
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
         try {
-            $credentials = $request->validate([
-                'email' => 'required|email',
-                'password' => 'required',
-            ]);
+            $credentials = $request->validated();
 
             if (Auth::guard('admin')->attempt($credentials)) {
                 if (Auth::guard('admin')->user()->role === 'admin') {

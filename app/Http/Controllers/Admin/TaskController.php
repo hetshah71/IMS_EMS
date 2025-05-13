@@ -8,6 +8,7 @@ use App\Models\Intern;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\TasksRequest;
 use Exception;
 
 class TaskController extends Controller
@@ -33,18 +34,12 @@ class TaskController extends Controller
         }
     }
 
-    public function store(Request $request)
+    public function store(TasksRequest $request)
     {
         try {
-            
-            $validated = $request->validate([
-                'title' => 'required|string|max:255',
-                'description' => 'required|string',
-                'due_date' => 'required|date',
-                'status' => 'required|in:pending,in_progress,completed',
-                'interns' => 'required|array|exists:interns,id'
-            ]);
-           
+
+            $validated = $request->validated();
+
 
             $task = Task::create([
                 'title' => $validated['title'],
@@ -79,15 +74,9 @@ class TaskController extends Controller
         return view('admin.tasks.edit', compact('task', 'interns'));
     }
 
-    public function update(Request $request, Task $task)
+    public function update(TasksRequest $request, Task $task)
     {
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'due_date' => 'required|date|after:today',
-            'status' => 'required|in:pending,in_progress,completed',
-            'interns' => 'required|array|exists:interns,id'
-        ]);
+        $validated = $request->validated();
 
         $task->update([
             'title' => $validated['title'],
@@ -106,20 +95,18 @@ class TaskController extends Controller
         $task->delete();
         return redirect()->route('tasks.index')->with('success', 'Task deleted successfully.');
     }
-    
-    public function addComment(Request $request, Task $task)
+
+    public function addComment(TasksRequest $request, Task $task)
     {
         try {
-            $validated = $request->validate([
-                'content' => 'required|string'
-            ]);
-            
+            $validated = $request->validated();
+
             Comment::create([
                 'task_id' => $task->id,
                 'user_id' => Auth::id(),
                 'content' => $validated['content']
             ]);
-            
+
             return redirect()->route('tasks.edit', $task)->with('success', 'Comment added successfully.');
         } catch (Exception $e) {
             return redirect()->route('tasks.edit', $task)->with('error', 'Error adding comment: ' . $e->getMessage())->withInput();

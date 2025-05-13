@@ -29,12 +29,7 @@
                         </div>
                     </div>
 
-                    <!-- Success Message -->
-                    @if (session('success'))
-                    <div class="bg-green-900 border-l-4 border-green-500 text-green-200 px-4 py-3 rounded-lg mb-6 shadow-sm">
-                        {{ session('success') }}
-                    </div>
-                    @endif
+                    
 
                     <!-- Admin Table -->
                     <div class="overflow-x-auto">
@@ -91,7 +86,10 @@
                                             <form action="{{ route('admins.destroy', $admin) }}" method="POST" class="inline">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="text-red-400 hover:text-red-300 transition-colors duration-150" onclick="return confirm('Are you sure you want to delete this admin?')">
+                                                <button type="button"
+                                                    class="text-red-400 hover:text-red-300 transition-colors duration-150"
+                                                    data-delete-url="{{ route('admins.destroy', $admin) }}"
+                                                    onclick="openDeleteModal('{{ $admin->id }}', '{{ $admin->user->name }}', this)">
                                                     <span class="sr-only">Delete</span>
                                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -128,4 +126,45 @@
             </div>
         </div>
     </div>
+    <div id="deleteModal" class="fixed inset-0 bg-gray-900/75 hidden items-center justify-center z-50">
+        <div class="bg-gray-800 rounded-lg p-6 max-w-md w-full mx-4">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-xl font-semibold text-white">Confirm Delete</h3>
+                <button onclick="closeDeleteModal()" class="text-gray-400 hover:text-gray-300">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <p class="text-gray-300 mb-6">Are you sure you want to delete this Admin "<span id="adminName" class="font-medium"></span>"? This action cannot be undone.</p>
+            <div class="flex justify-end space-x-3">
+                <button onclick="closeDeleteModal()" class="px-4 py-2 text-sm font-medium text-gray-300 hover:text-white bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors duration-150">
+                    Cancel
+                </button>
+                <form id="deleteForm" method="POST" class="inline">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-lg hover:bg-red-700 transition-colors duration-150">
+                        Delete
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        function openDeleteModal(adminId, adminName, button) {
+            const $modal = $('#deleteModal');
+            const $deleteForm = $('#deleteForm');
+            const $titleSpan = $('#adminName');
+
+            $deleteForm.attr('action', $(button).data('delete-url'));
+            $titleSpan.text(adminName);
+            $modal.removeClass('hidden').addClass('flex');
+        }
+
+        function closeDeleteModal() {
+            const $modal = $('#deleteModal');
+            $modal.addClass('hidden').removeClass('flex');
+        }
+    </script>
 </x-dashboard-layout>

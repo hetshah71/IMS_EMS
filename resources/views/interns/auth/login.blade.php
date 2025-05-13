@@ -4,12 +4,6 @@
         <p class="mt-1 text-sm text-gray-400">Access your intern dashboard</p>
     </div>
 
-    @if (session('error'))
-    <div class="mb-4 p-3 bg-red-900/30 border border-red-800 rounded-lg">
-        <p class="text-sm text-red-300 text-center">{{ session('error') }}</p>
-    </div>
-    @endif
-
     <form method="POST" action="{{ route('intern.login') }}" class="space-y-4">
         @csrf
 

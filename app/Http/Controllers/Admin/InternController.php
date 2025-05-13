@@ -8,7 +8,7 @@ use App\Models\Intern;
 use App\Models\User;
 use App\Models\Task;
 use Exception;
-
+use App\Http\Requests\InternsRequest;
 class InternController extends Controller
 {
     public function index()
@@ -30,24 +30,19 @@ class InternController extends Controller
         }
     }
 
-    public function store(Request $request)
+    public function store(InternsRequest $request)
     {
         try {
-            $request->validate([
-                'name' => 'required|string|max:255',
-                'email' => 'required|string|email|max:255',
-                'password' => 'required|string|min:8|confirmed',
-            ]);
-
+            $request->validated();
             $user = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => bcrypt($request->password),
+                'name' => $request->validated()['name'],
+                'email' => $request->validated()['email'], 
+                'password' => bcrypt($request->validated()['password']),
             ]);
 
             Intern::create([
                 'user_id' => $user->id,
-                'department' => $request->department,
+                'department' => $request->validated()['department'],
             ]);
 
             return redirect()->route('interns.index')->with('success', 'Intern created successfully.');
@@ -76,24 +71,20 @@ class InternController extends Controller
         }
     }
 
-    public function update(Request $request, $id)
+    public function update(InternsRequest $request, $id)
     {
         try {
             $intern = Intern::with('user')->findOrFail($id);
 
-            $request->validate([
-                'name' => 'required|string|max:255',
-                'email' => 'required|string|email|max:255|unique:users,email,' . $intern->user->id,
-                'department' => 'required|string|max:255',
-            ]);
+            $request->validated();
 
             $intern->user->update([
-                'name' => $request->name,
-                'email' => $request->email,
+                'name' => $request->validated()['name'],
+                'email' => $request->validated()['email'],
             ]);
 
             $intern->update([
-                'department' => $request->department,
+                'department' => $request->validated()['department'],
             ]);
 
             return redirect()->route('interns.index')->with('success', 'Intern updated successfully.');
@@ -128,13 +119,10 @@ class InternController extends Controller
         }
     }
 
-    public function assignStore(Request $request)
+    public function assignStore(InternsRequest $request)
     {
         try {
-            $validated = $request->validate([
-                'intern_id' => 'required|exists:interns,id',
-                'task_id' => 'required|exists:tasks,id'
-            ]);
+            $validated = $request->validated();
 
             $task = Task::find($validated['task_id']);
             $task->interns()->attach($validated['intern_id']);

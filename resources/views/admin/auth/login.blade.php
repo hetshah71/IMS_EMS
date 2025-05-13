@@ -3,13 +3,6 @@
         <h1 class="text-2xl font-bold text-gray-200">Admin Login</h1>
         <p class="mt-1 text-sm text-gray-400">Access your admin dashboard</p>
     </div>
-
-    @if (session('error'))
-    <div class="mb-4 p-3 bg-red-900/30 border border-red-800 rounded-lg">
-        <p class="text-sm text-red-300 text-center">{{ session('error') }}</p>
-    </div>
-    @endif
-
     <form method="POST" action="{{ route('admin.login') }}" class="space-y-4">
         @csrf
 
@@ -39,12 +32,5 @@
                    transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500">
             Sign In
         </button>
-
-        <div class="text-sm text-center text-gray-400 pt-3">
-            Not registered?
-            <a href="{{ route('admin.register.form') }}" class="text-indigo-400 hover:text-indigo-300 hover:underline">
-                Register as Admin
-            </a>
-        </div>
     </form>
 </x-guest-layout>

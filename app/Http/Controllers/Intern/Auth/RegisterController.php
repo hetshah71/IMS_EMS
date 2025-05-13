@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Intern;
+use App\Http\Requests\Auth\RegisterRequest;
+use Illuminate\Support\Facades\Log;
+
 class RegisterController extends Controller
 {
     //
@@ -14,30 +17,27 @@ class RegisterController extends Controller
     {
         return view('interns.auth.register');
     }
-    public function register(Request $request)
+    public function register(RegisterRequest $request)
     {
-        // Validate the request
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email', // Check email uniqueness in users table
-            'password' => 'required|string|min:8|confirmed',
-            'department' => 'required|string|max:255',
-        ]);
-
-        // Create the user
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => 'intern',
-        ]);
-
-        // Create the corresponding intern record
-        Intern::create([
-            'user_id' => $user->id,
-            'department' => $request->department,
-        ]);
-
-        return redirect()->route('intern.login.form')->with('success', 'Intern registered successfully.');
+        try {
+            // Validate the request
+            $credentials = $request->validated();   
+            // Create the user
+            $user = User::create([
+                'name' => $credentials['name'],
+                'email' => $credentials['email'],
+                'password' => Hash::make($credentials['password']),
+                'role' => 'intern',
+            ]);
+            // Create the corresponding intern record
+            Intern::create([
+                'user_id' => $user->id,
+                'department' => $credentials['department'],
+            ]);
+            return redirect()->route('intern.login.form')->with('success', 'Intern registered successfully.');
+        } catch (\Exception $e) {
+            Log::error('Error in RegisterController@register: ' . $e->getMessage());
+            return redirect()->back()->withErrors(['email' => 'An error occurred during registration.']);
+        }
     }
 }

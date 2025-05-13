@@ -135,7 +135,7 @@
                         </div>
                         <div class="mt-4">
                             <div class="w-full bg-gray-700 rounded-full h-2.5">
-                                <div class="bg-yellow-500 h-2.5 rounded-full" style="width: {{ $totalTasks > 0 ? ($totalCompletedTasks / $totalTasks) * 100 : 0 }}%"></div>
+                                <div class="bg-yellow-500 h-2.5 rounded-full" data-width="{{ $totalTasks > 0 ? ($totalCompletedTasks / $totalTasks) * 100 : 0 }}"></div>
                             </div>
                         </div>
                     </div>
@@ -156,7 +156,7 @@
                         </div>
                         <div class="mt-4">
                             <div class="w-full bg-gray-700 rounded-full h-2.5">
-                                <div class="bg-purple-500 h-2.5 rounded-full" style="width: {{ $totalTasks > 0 ? ($totalInProgressTasks / $totalTasks) * 100 : 0 }}%"></div>
+                                <div class="bg-purple-500 h-2.5 rounded-full" data-width="{{ $totalTasks > 0 ? ($totalInProgressTasks / $totalTasks) * 100 : 0 }}"></div>
                             </div>
                         </div>
                     </div>
@@ -177,7 +177,7 @@
                         </div>
                         <div class="mt-4">
                             <div class="w-full bg-gray-700 rounded-full h-2.5">
-                                <div class="bg-blue-500 h-2.5 rounded-full" style="width: {{ $totalTasks > 0 ? ($totalPendingTasks / $totalTasks) * 100 : 0 }}%"></div>
+                                <div class="bg-blue-500 h-2.5 rounded-full" data-width="{{ $totalTasks > 0 ? ($totalPendingTasks / $totalTasks) * 100 : 0 }}"></div>
                             </div>
                         </div>
                     </div>
@@ -232,3 +232,11 @@
         </div>
     </div>
 </x-dashboard-layout>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('[data-width]').forEach(function(element) {
+            element.style.width = element.dataset.width + '%';
+        });
+    });
+</script>

@@ -65,7 +65,7 @@ class ChatController extends Controller
                 'content' => $request->input('content'),
                 'read' => false,
             ]);
-            Log::info('Message sent: ' . $message);
+            // Log::info('Message sent: ' . $message);
             broadcast(new MessageSent($message));
             return response()->json([
                 'success' => true, 

@@ -2,38 +2,38 @@
     <div class="flex min-h-screen bg-gray-900">
         <!-- Sidebar -->
         <aside class="w-64 bg-gray-800 text-white flex-shrink-0">
-            <a href="{{ route('admin.dashboard') }}" class="block p-6 text-2xl font-bold border-b border-gray-700 hover:bg-gray-700 transition duration-150">
+            <x-nav-link href="{{ route('admin.dashboard') }}" class="block p-6 text-2xl font-bold border-b" :active="request()->routeIs('admin.dashboard')">
                 Admin Panel
-            </a>
+            </x-nav-link>
             <nav class="mt-4">
                 @can('manage-tasks')
-                <a href="{{ route('tasks.index') }}" class="block px-6 py-3 hover:bg-gray-700 transition duration-150">
+                <x-nav-link href="{{ route('tasks.index') }}" :active="request()->routeIs('tasks*')">
                     Tasks
-                </a>
+                </x-nav-link>
                 @endcan
                 @can('manage-interns')
-                <a href="{{ route('interns.index') }}" class="block px-6 py-3 hover:bg-gray-700 transition duration-150">
+                <x-nav-link href="{{ route('interns.index') }}" :active="request()->routeIs('interns*')">
                     Interns
-                </a>
+                </x-nav-link>
                 @endcan
                 @can('manage-admins')
-                <a href="{{ route('admins.index') }}" class="block px-6 py-3 hover:bg-gray-700 transition duration-150">
+                <x-nav-link href="{{ route('admins.index') }}" :active="request()->routeIs('admins*')">
                     Admins
-                </a>
+                </x-nav-link>
                 @endcan
                 @can('manage-roles')
-                <a href="{{ route('roles.index') }}" class="block px-6 py-3 hover:bg-gray-700 transition duration-150">
+                <x-nav-link href="{{ route('roles.index') }}" :active="request()->routeIs('roles*')">
                     Roles
-                </a>
+                </x-nav-link>
                 @endcan
                 @can('manage-permissions')
-                <a href="{{ route('permissions.index') }}" class="block px-6 py-3 hover:bg-gray-700 transition duration-150">
+                <x-nav-link href="{{ route('permissions.index') }}" :active="request()->routeIs('permissions*')">
                     Permissions
-                </a>
+                </x-nav-link>
                 @endcan
-                <a href="{{ route('chat.index') }}" class="block px-6 py-3 hover:bg-gray-700 transition duration-150">
-                    CHAT
-                </a>
+                <x-nav-link href="{{ route('chat.index') }}" :active="request()->routeIs('chat.index')">
+                    Chat
+                </x-nav-link>
             </nav>
         </aside>
 

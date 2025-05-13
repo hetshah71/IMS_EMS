@@ -1,4 +1,5 @@
 <?php
+
 include_once 'admin.php';
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Intern\Auth\LoginController as InternLoginController;

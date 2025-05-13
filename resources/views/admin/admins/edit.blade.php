@@ -16,7 +16,7 @@
                             <label for="name" class="block text-sm font-medium text-gray-300">Name</label>
                             <input type="text" name="name" id="name" value="{{ old('name', $admin->user->name) }}"
                                 class="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-gray-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm transition duration-150"
-                                required>
+                                >
                             @error('name')
                             <p class="mt-1 text-sm text-red-400">{{ $message }}</p>
                             @enderror
@@ -27,35 +27,20 @@
                             <label for="email" class="block text-sm font-medium text-gray-300">Email</label>
                             <input type="email" name="email" id="email" value="{{ old('email', $admin->user->email) }}"
                                 class="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-gray-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm transition duration-150"
-                                required>
+                                readonly>
                             @error('email')
                             <p class="mt-1 text-sm text-red-400">{{ $message }}</p>
                             @enderror
                         </div>
 
-                        <!-- Password Field -->
-                        <div>
-                            <label for="password" class="block text-sm font-medium text-gray-300">Password (Leave blank to keep current)</label>
-                            <input type="password" name="password" id="password"
-                                class="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-gray-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm transition duration-150">
-                            @error('password')
-                            <p class="mt-1 text-sm text-red-400">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        <!-- Password Confirmation Field -->
-                        <div>
-                            <label for="password_confirmation" class="block text-sm font-medium text-gray-300">Confirm Password</label>
-                            <input type="password" name="password_confirmation" id="password_confirmation"
-                                class="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-gray-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm transition duration-150">
-                        </div>
+                        
 
                         <!-- Department Field -->
                         <div>
                             <label for="department" class="block text-sm font-medium text-gray-300">Department</label>
                             <input type="text" name="department" id="department" value="{{ old('department', $admin->department) }}"
                                 class="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-gray-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm transition duration-150"
-                                required>
+                                >
                             @error('department')
                             <p class="mt-1 text-sm text-red-400">{{ $message }}</p>
                             @enderror
@@ -66,7 +51,7 @@
                             <label for="position" class="block text-sm font-medium text-gray-300">Position</label>
                             <input type="text" name="position" id="position" value="{{ old('position', $admin->position) }}"
                                 class="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-gray-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm transition duration-150"
-                                required>
+                              >
                             @error('position')
                             <p class="mt-1 text-sm text-red-400">{{ $message }}</p>
                             @enderror
@@ -77,7 +62,7 @@
                             <label for="roles" class="block text-sm font-medium text-gray-300">Roles</label>
                             <select name="roles[]" id="roles" multiple
                                 class="mt-1 block w-full rounded-md border-gray-600 bg-gray-700 text-gray-200 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm transition duration-150"
-                                required>
+                                >
                                 @foreach($roles as $role)
                                 <option value="{{ $role->id }}" {{ in_array($role->id, old('roles', $admin->user->roles->pluck('id')->toArray())) ? 'selected' : '' }}>
                                     {{ $role->name }}

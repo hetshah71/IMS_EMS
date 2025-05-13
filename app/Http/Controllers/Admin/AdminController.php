@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Admin;
 use App\Models\Role;
 use App\Models\User;
+use App\Http\Requests\AdminsRequest;
 use Illuminate\Support\Facades\Hash;
 use Exception;
 
@@ -30,44 +31,32 @@ class AdminController extends Controller
             return redirect()->back()->with('error', 'Error loading create form: ' . $e->getMessage());
         }
     }
-    public function store(Request $request)
+    public function store(AdminsRequest $request)
     {
         try {
-            $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:8',
-            'department' => 'required|string|max:255',
-            'position' => 'required|string|max:255',
-            'roles' => 'required|array', // Ensure roles are provided
-            'roles.*' => 'exists:roles,id', // Validate each role ID exists
-        ]);
+            $request->validated();
         // Create the user
         $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'name' => $request->validated()['name'],
+            'email' => $request->validated()['email'], 
+            'password' => Hash::make($request->validated()['password']),
             'role' => 'admin',
         ]);
         // Create the corresponding admin record
         Admin::create([
             'user_id' => $user->id,
-            'department' => $request->department,
-            'position' => $request->position,
+            'department' => $request->validated()['department'],
+            'position' => $request->validated()['position'],
         ]);
         // Sync roles to the user (not admin) to populate the role_user table
-        if ($request->has('roles')) {
-            $user->roles()->sync($request->input('roles'));
+        if (isset($request->validated()['roles']) && $request->validated()['roles']) {
+            $user->roles()->sync($request->validated()['roles']);
         }
             return redirect()->route('admins.index')->with('success', 'Admin created successfully');
         } catch (Exception $e) {
             return redirect()->back()->with('error', 'Error creating admin: ' . $e->getMessage())->withInput();
         }
     }
-    // public function show(Admin $admin)
-    // {
-    //     return view('admin.admins.show', compact('admin'));
-    // }
     public function edit(Admin $admin)
     {
         try {
@@ -80,32 +69,25 @@ class AdminController extends Controller
             return redirect()->back()->with('error', 'Error loading edit form: ' . $e->getMessage());
         }
     }
-    public function update(Request $request, Admin $admin)
+    public function update(AdminsRequest $request, Admin $admin)
     {
         try {
             $user = User::findOrFail($admin->user_id);
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $user->id, // Exclude current user's email
-            'password' => 'nullable|string|min:8',
-            'department' => 'required|string|max:255',
-            'position' => 'required|string|max:255',
-            'roles' => 'required|array',
-            'roles.*' => 'exists:roles,id',
-        ]);
+        $request->validated();
         // Update the user
         $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password ? Hash::make($request->password) : $user->password,
+            'name' => $request->validated()['name'],
+            'email' => $request->validated()['email'],
         ]);
         // Update the admin record
         $admin->update([
-            'department' => $request->department,
-            'position' => $request->position,
+            'department' => $request->validated()['department'] ?? $admin->department,
+            'position' => $request->validated()['position'] ?? $admin->position ,
         ]);
         // Sync roles to the user
-        $user->roles()->sync($request->input('roles'));
+        if (isset($request->validated()['roles']) && $request->validated()['roles']) {
+            $user->roles()->sync($request->validated()['roles']);
+        }
             return redirect()->route('admins.index')->with('success', 'Admin updated successfully');
         } catch (Exception $e) {
             return redirect()->back()->with('error', 'Error updating admin: ' . $e->getMessage())->withInput();
