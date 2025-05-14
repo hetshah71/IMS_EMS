@@ -9,7 +9,10 @@ use App\Models\User;
 use App\Models\Task;
 use Exception;
 use App\Http\Requests\InternsRequest;
+use App\Notifications\TaskAssigned;
+use Illuminate\Support\Facades\Auth;
 class InternController extends Controller
+
 {
     public function index()
     {
@@ -38,6 +41,7 @@ class InternController extends Controller
                 'name' => $request->validated()['name'],
                 'email' => $request->validated()['email'], 
                 'password' => bcrypt($request->validated()['password']),
+                'role'=> 'intern',
             ]);
 
             Intern::create([
@@ -119,18 +123,36 @@ class InternController extends Controller
         }
     }
 
-    public function assignStore(InternsRequest $request)
+    public function assignStore(Request $request)
     {
         try {
-            $validated = $request->validated();
+            $request->validate([
+                'task_id'   => 'required|array',
+                'task_id.*' => 'exists:tasks,id',
+                'intern_id' => 'required|exists:interns,id',
+            ]);
 
-            $task = Task::find($validated['task_id']);
-            $task->interns()->attach($validated['intern_id']);
-            $task->update(['status' => 'in_progress']);
+            $intern = Intern::findOrFail($request->intern_id);
+            $taskIds = $request->task_id;
+            $admin = Auth::user();
 
-            return redirect()->route('interns.index')->with('success', 'Task assigned successfully.');
+            foreach ($taskIds as $taskId) {
+                $task = Task::findOrFail($taskId);
+
+                // Attach intern to task (many-to-many)
+                $task->interns()->syncWithoutDetaching([$intern->id]);
+
+                // Update status if needed
+                $task->update(['status' => 'in_progress']);
+
+                // dd($intern);
+                // Send notification
+                $intern->notify(new TaskAssigned($task,$admin));
+            }
+
+            return redirect()->route('interns.index')->with('success', 'Tasks assigned and intern notified successfully.');
         } catch (Exception $e) {
-            return redirect()->back()->with('error', 'Error assigning task: ' . $e->getMessage())->withInput();
+            return redirect()->back()->with('error', 'Error assigning tasks: ' . $e->getMessage())->withInput();
         }
     }
 }

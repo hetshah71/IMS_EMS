@@ -22,8 +22,8 @@ class InternsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'intern_id' => 'required|exists:interns,id',
-            'task_id' => 'required|exists:tasks,id',
+            // 'intern_id' => 'required|exists:interns,id',
+            // 'task_id' => 'required|exists:tasks,id',
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255',
             'password' => 'required|string|min:8|confirmed',

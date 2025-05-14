@@ -160,7 +160,6 @@
                             </div>
                         </div>
                     </div>
-
                     <!-- Pending Tasks Card -->
                     <div class="bg-gray-900 rounded-xl p-5 border-l-4 border-blue-500 shadow-md hover:shadow-lg transition-shadow duration-300">
                         <div class="flex justify-between items-center">
@@ -183,7 +182,6 @@
                     </div>
                 </div>
             </div>
-
             <!-- Quick Actions Section -->
             <div class="bg-gray-800 rounded-2xl shadow-xl p-6 border border-gray-700">
                 <h2 class="text-2xl font-bold text-white mb-6">Quick Actions</h2>
@@ -197,7 +195,6 @@
                         <span class="font-semibold text-lg">Create New Task</span>
                         <span class="text-xs text-indigo-200 mt-1">Assign work to interns</span>
                     </a>
-
                     <a href="{{ route('interns.create') }}" class="group bg-gradient-to-br from-blue-500 to-blue-700 hover:from-blue-600 hover:to-blue-800 text-white rounded-xl p-5 flex flex-col items-center justify-center shadow-lg transition duration-300 transform hover:scale-105 hover:shadow-xl">
                         <div class="bg-white bg-opacity-20 rounded-full p-3 mb-3 group-hover:bg-opacity-30 transition-all duration-300">
                             <svg class="h-8 w-8 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -207,7 +204,6 @@
                         <span class="font-semibold text-lg">Add New Intern</span>
                         <span class="text-xs text-blue-200 mt-1">Register a new intern</span>
                     </a>
-
                     <a href="{{ route('admins.create') }}" class="group bg-gradient-to-br from-red-500 to-red-700 hover:from-red-600 hover:to-red-800 text-white rounded-xl p-5 flex flex-col items-center justify-center shadow-lg transition duration-300 transform hover:scale-105 hover:shadow-xl">
                         <div class="bg-white bg-opacity-20 rounded-full p-3 mb-3 group-hover:bg-opacity-30 transition-all duration-300">
                             <svg class="h-8 w-8 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -217,7 +213,6 @@
                         <span class="font-semibold text-lg">Add New Admin</span>
                         <span class="text-xs text-red-200 mt-1">Create admin account</span>
                     </a>
-
                     <a href="{{ route('tasks.index') }}" class="group bg-gradient-to-br from-emerald-500 to-emerald-700 hover:from-emerald-600 hover:to-emerald-800 text-white rounded-xl p-5 flex flex-col items-center justify-center shadow-lg transition duration-300 transform hover:scale-105 hover:shadow-xl">
                         <div class="bg-white bg-opacity-20 rounded-full p-3 mb-3 group-hover:bg-opacity-30 transition-all duration-300">
                             <svg class="h-8 w-8 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">

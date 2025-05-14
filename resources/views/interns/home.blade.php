@@ -52,7 +52,7 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                                 </svg>
-                                <span class="text-gray-700">{{ $intern->department }}</span>
+                                <span class="text-gray-300">{{ $intern->department }}</span>
                             </div>
                         </div>
                     </div>
@@ -87,8 +87,8 @@
                                         </span>
                                     </div>
                                     <div class="ml-3">
-                                        <p class="text-sm font-medium text-gray-800">{{ $recentTask->title }}</p>
-                                        <p class="text-xs text-gray-500">{{ $recentTask->updated_at->diffForHumans() }}</p>
+                                        <p class="text-sm font-medium text-gray-300">{{ $recentTask->title }}</p>
+                                        <p class="text-xs text-gray-300">{{ $recentTask->updated_at->diffForHumans() }}</p>
                                     </div>
                                 </div>
                                 @empty

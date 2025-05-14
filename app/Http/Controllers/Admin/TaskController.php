@@ -86,7 +86,6 @@ class TaskController extends Controller
         ]);
 
         $task->interns()->sync($validated['interns']);
-
         return redirect()->route('tasks.index')->with('success', 'Task updated successfully.');
     }
 

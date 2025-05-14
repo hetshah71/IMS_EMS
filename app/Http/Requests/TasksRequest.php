@@ -27,7 +27,7 @@ class TasksRequest extends FormRequest
             'due_date' => 'required|date',
             'status' => 'required|in:pending,in_progress,completed',
             'interns' => 'required|array|exists:interns,id',
-            'content' => 'required|string'
+           
         ];
     }
 }
